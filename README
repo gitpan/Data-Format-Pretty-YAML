@@ -1,0 +1,42 @@
+NAME
+    Data::Format::Pretty::YAML - Pretty-print data structure as YAML
+
+VERSION
+    version 0.01
+
+SYNOPSIS
+     use Data::Format::Pretty::YAML qw(format_pretty);
+     print format_pretty($data);
+
+    Some example output:
+
+    *   format_pretty({a=>1, b=>2})
+
+          a: 1
+          b: 2
+
+DESCRIPTION
+    This module uses YAML::Syck to encode data as YAML.
+
+FUNCTIONS
+  format_pretty($data, \%opts)
+    Return formatted data structure as YAML. Currently there are no known
+    options. YAML::Syck's settings are optimized for prettiness, currently
+    as follows:
+
+     $YAML::Syck::ImplicitTyping = 1;
+     $YAML::Syck::SortKeys       = 1;
+     $YAML::Syck::Headless       = 1;
+
+SEE ALSO
+    Data::Format::Pretty
+
+AUTHOR
+    Steven Haryanto <stevenharyanto@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2011 by Steven Haryanto.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
