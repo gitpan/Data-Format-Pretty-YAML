@@ -2,7 +2,7 @@ NAME
     Data::Format::Pretty::YAML - Pretty-print data structure as YAML
 
 VERSION
-    version 0.02
+    version 0.03
 
 SYNOPSIS
      use Data::Format::Pretty::YAML qw(format_pretty);
@@ -27,6 +27,16 @@ FUNCTIONS
      $YAML::Syck::ImplicitTyping = 1;
      $YAML::Syck::SortKeys       = 1;
      $YAML::Syck::Headless       = 1;
+
+    Options:
+
+    *   color => BOOL
+
+        Whether to enable coloring. The default is the enable only when
+        running interactively. Currently also enable line numbering.
+
+  content_type() => STR
+    Return "text/yaml".
 
 SEE ALSO
     Data::Format::Pretty

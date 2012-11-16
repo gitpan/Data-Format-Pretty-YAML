@@ -7,10 +7,8 @@ use Module::Build 0.3601;
 
 my %module_build_args = (
   "build_requires" => {
-    "File::Find" => 0,
-    "File::Temp" => 0,
     "Module::Build" => "0.3601",
-    "Test::More" => 0
+    "Test::More" => "0.96"
   },
   "configure_requires" => {
     "Module::Build" => "0.3601"
@@ -20,18 +18,15 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Data-Format-Pretty-YAML",
-  "dist_version" => "0.02",
+  "dist_version" => "0.03",
   "license" => "perl",
   "module_name" => "Data::Format::Pretty::YAML",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
-    "Exporter" => 0,
-    "Test::More" => "0.96",
     "YAML::Syck" => 0,
-    "perl" => "5.010000",
-    "strict" => 0,
-    "warnings" => 0
+    "YAML::Tiny::Color" => "0.02",
+    "perl" => "5.010000"
   },
   "script_files" => []
 );
