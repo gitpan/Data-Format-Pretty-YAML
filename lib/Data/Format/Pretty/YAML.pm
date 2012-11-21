@@ -8,7 +8,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.03'; # VERSION
+our $VERSION = '0.04'; # VERSION
 
 sub content_type { "text/yaml" }
 
@@ -16,7 +16,7 @@ sub format_pretty {
     my ($data, $opts) = @_;
     $opts //= {};
 
-    if ($opts->{color} // (-t STDOUT)) {
+    if ($opts->{color} // $ENV{COLOR} // (-t STDOUT)) {
         require YAML::Tiny::Color;
         local $YAML::Tiny::Color::LineNumber = 1;
         YAML::Tiny::Color::Dump($data);
@@ -41,7 +41,7 @@ Data::Format::Pretty::YAML - Pretty-print data structure as YAML
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
@@ -88,6 +88,12 @@ interactively. Currently also enable line numbering.
 =head2 content_type() => STR
 
 Return C<text/yaml>.
+
+=head1 ENVIRONMENT
+
+=head2 COLOR => BOOL
+
+Set C<color> option (if unset).
 
 =head1 SEE ALSO
 

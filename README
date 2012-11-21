@@ -2,7 +2,7 @@ NAME
     Data::Format::Pretty::YAML - Pretty-print data structure as YAML
 
 VERSION
-    version 0.03
+    version 0.04
 
 SYNOPSIS
      use Data::Format::Pretty::YAML qw(format_pretty);
@@ -37,6 +37,10 @@ FUNCTIONS
 
   content_type() => STR
     Return "text/yaml".
+
+ENVIRONMENT
+  COLOR => BOOL
+    Set "color" option (if unset).
 
 SEE ALSO
     Data::Format::Pretty
