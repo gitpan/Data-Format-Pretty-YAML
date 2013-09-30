@@ -2,7 +2,7 @@ NAME
     Data::Format::Pretty::YAML - Pretty-print data structure as YAML
 
 VERSION
-    version 0.04
+    version 0.05
 
 SYNOPSIS
      use Data::Format::Pretty::YAML qw(format_pretty);
@@ -30,7 +30,18 @@ FUNCTIONS
 
     Options:
 
-    *   color => BOOL
+    *   color => BOOL (default: from env or 1)
+
+        Whether to enable coloring. The default is the enable only when
+        running interactively. Currently also enable line numbering.
+
+    *   pretty => BOOL (default: 1)
+
+        Whether to focus on prettyness. If set to 0, will focus on producing
+        valid YAML instead of prettiness. This affects default value for
+        "linum".
+
+    *   linum => BOOL (default: 1 unless when pretty=0)
 
         Whether to enable coloring. The default is the enable only when
         running interactively. Currently also enable line numbering.
@@ -42,6 +53,9 @@ ENVIRONMENT
   COLOR => BOOL
     Set "color" option (if unset).
 
+  LINUM => BOOL
+    Set "linum" option (if unset).
+
 SEE ALSO
     Data::Format::Pretty
 
@@ -49,7 +63,7 @@ AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2012 by Steven Haryanto.
+    This software is copyright (c) 2013 by Steven Haryanto.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

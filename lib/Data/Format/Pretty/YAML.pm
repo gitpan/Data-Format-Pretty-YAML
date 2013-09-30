@@ -1,6 +1,6 @@
 package Data::Format::Pretty::YAML;
 
-use 5.010;
+use 5.010001;
 use strict;
 use warnings;
 
@@ -8,7 +8,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.04'; # VERSION
+our $VERSION = '0.05'; # VERSION
 
 sub content_type { "text/yaml" }
 
@@ -16,22 +16,32 @@ sub format_pretty {
     my ($data, $opts) = @_;
     $opts //= {};
 
-    if ($opts->{color} // $ENV{COLOR} // (-t STDOUT)) {
+    my $pretty = $opts->{pretty} // 1;
+    my $linum  = $opts->{linum} // $ENV{LINUM} // $opts->{pretty};
+    my $color  = $opts->{color} // $ENV{COLOR} // (-t STDOUT);
+
+    if ($color) {
         require YAML::Tiny::Color;
-        local $YAML::Tiny::Color::LineNumber = 1;
+        local $YAML::Tiny::Color::LineNumber = $linum;
         YAML::Tiny::Color::Dump($data);
     } else {
         require YAML::Syck;
         local $YAML::Syck::ImplicitTyping = 1;
         local $YAML::Syck::SortKeys       = 1;
         local $YAML::Syck::Headless       = 1;
-        YAML::Syck::Dump($data);
+        if ($linum) {
+            require SHARYANTO::String::Util;
+            SHARYANTO::String::Util::linenum(YAML::Syck::Dump($data));
+        } else {
+            YAML::Syck::Dump($data);
+        }
     }
 }
 
 1;
 # ABSTRACT: Pretty-print data structure as YAML
 
+__END__
 
 =pod
 
@@ -41,7 +51,7 @@ Data::Format::Pretty::YAML - Pretty-print data structure as YAML
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 
@@ -78,7 +88,17 @@ Options:
 
 =over
 
-=item * color => BOOL
+=item * color => BOOL (default: from env or 1)
+
+Whether to enable coloring. The default is the enable only when running
+interactively. Currently also enable line numbering.
+
+=item * pretty => BOOL (default: 1)
+
+Whether to focus on prettyness. If set to 0, will focus on producing valid YAML
+instead of prettiness. This affects default value for C<linum>.
+
+=item * linum => BOOL (default: 1 unless when pretty=0)
 
 Whether to enable coloring. The default is the enable only when running
 interactively. Currently also enable line numbering.
@@ -95,6 +115,10 @@ Return C<text/yaml>.
 
 Set C<color> option (if unset).
 
+=head2 LINUM => BOOL
+
+Set C<linum> option (if unset).
+
 =head1 SEE ALSO
 
 L<Data::Format::Pretty>
@@ -105,14 +129,9 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Steven Haryanto.
+This software is copyright (c) 2013 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-
-
