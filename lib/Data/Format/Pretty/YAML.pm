@@ -8,7 +8,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.05'; # VERSION
+our $VERSION = '0.06'; # VERSION
 
 sub content_type { "text/yaml" }
 
@@ -45,13 +45,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Data::Format::Pretty::YAML - Pretty-print data structure as YAML
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -109,6 +111,9 @@ interactively. Currently also enable line numbering.
 
 Return C<text/yaml>.
 
+
+None are exported by default, but they are exportable.
+
 =head1 ENVIRONMENT
 
 =head2 COLOR => BOOL
@@ -122,6 +127,22 @@ Set C<linum> option (if unset).
 =head1 SEE ALSO
 
 L<Data::Format::Pretty>
+
+=head1 HOMEPAGE
+
+Please visit the project's homepage at L<https://metacpan.org/release/Data-Format-Pretty-YAML>.
+
+=head1 SOURCE
+
+Source repository is at L<https://github.com/sharyanto/perl-Data-Format-Pretty-YAML>.
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website L<https://rt.cpan.org/Public/Dist/Display.html?Name=Data-Format-Pretty-YAML>
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
 
 =head1 AUTHOR
 
