@@ -8,7 +8,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.06'; # VERSION
+our $VERSION = '0.07'; # VERSION
 
 sub content_type { "text/yaml" }
 
@@ -16,9 +16,11 @@ sub format_pretty {
     my ($data, $opts) = @_;
     $opts //= {};
 
+    my $interactive = (-t STDOUT);
     my $pretty = $opts->{pretty} // 1;
-    my $linum  = $opts->{linum} // $ENV{LINUM} // $opts->{pretty};
-    my $color  = $opts->{color} // $ENV{COLOR} // (-t STDOUT);
+    my $color  = $opts->{color} // $ENV{COLOR} // $interactive //
+        $opts->{pretty};
+    my $linum  = $opts->{linum} // $ENV{LINUM} // 0;
 
     if ($color) {
         require YAML::Tiny::Color;
@@ -53,7 +55,7 @@ Data::Format::Pretty::YAML - Pretty-print data structure as YAML
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
@@ -93,26 +95,22 @@ Options:
 =item * color => BOOL (default: from env or 1)
 
 Whether to enable coloring. The default is the enable only when running
-interactively. Currently also enable line numbering.
+interactively.
 
 =item * pretty => BOOL (default: 1)
 
 Whether to focus on prettyness. If set to 0, will focus on producing valid YAML
-instead of prettiness. This affects default value for C<linum>.
+instead of prettiness.
 
-=item * linum => BOOL (default: 1 unless when pretty=0)
+=item * linum => BOOL (default: from env or 0)
 
-Whether to enable coloring. The default is the enable only when running
-interactively. Currently also enable line numbering.
+Whether to enable line numbering.
 
 =back
 
 =head2 content_type() => STR
 
 Return C<text/yaml>.
-
-
-None are exported by default, but they are exportable.
 
 =head1 ENVIRONMENT
 
@@ -123,6 +121,8 @@ Set C<color> option (if unset).
 =head2 LINUM => BOOL
 
 Set C<linum> option (if unset).
+
+=head1 FAQ
 
 =head1 SEE ALSO
 
@@ -150,7 +150,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Steven Haryanto.
+This software is copyright (c) 2014 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
